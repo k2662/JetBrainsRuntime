@@ -852,13 +852,11 @@ public final class RenderPerfTest {
             int cycle = 0;
             int frame = 0;
             long paintTime = 0;
-            int maxFrameCycle = -1;
 
             for (;;) {
                 long t;
                 if ((t = markerPaintTime.getAndSet(0)) > 0) {
                     paintTime = t;
-                    maxFrameCycle = cycle + MAX_FRAME_CYCLES;
                     if (TRACE) System.out.print("|");
                 }
 
@@ -872,15 +870,15 @@ public final class RenderPerfTest {
                         if (TRACE) System.out.print("R");
                         frame++;
                         paintTime = 0;
-                        maxFrameCycle = -1;
+                        cycle = 0;
                         markerIdx.accumulateAndGet(marker.length, (x, y) -> (x + 1) % y);
                         renderable.update();
                         repaint();
-                    } else if (cycle >= maxFrameCycle) {
+                    } else if (cycle >= MAX_FRAME_CYCLES) {
                         if (TRACE) System.out.print("M");
                         skippedFrame++;
                         paintTime = 0;
-                        maxFrameCycle = -1;
+                        cycle = 0;
                         markerIdx.accumulateAndGet(marker.length, (x, y) -> (x + 1) % y);
                         repaint();
                     } else {
@@ -895,6 +893,7 @@ public final class RenderPerfTest {
                     break;
                 }
                 sleep(CYCLE_DELAY);
+                cycle++;
             } // end measurements
 
             SwingUtilities.invokeAndWait(() -> {
@@ -1397,7 +1396,7 @@ public final class RenderPerfTest {
     }
 
     public void testArgbSurfaceBlitImage() throws Exception {
-        (new PerfMeter("ArgbSurfaceBlitImageRenderer")).exec(createPR(argbSurfaceBlitImageRenderer)).report();
+        (new PerfMeter("ArgbSurfaceBlitImage")).exec(createPR(argbSurfaceBlitImageRenderer)).report();
     }
 
     public void testBgrSurfaceBlitImage() throws Exception {
@@ -1448,11 +1447,17 @@ public final class RenderPerfTest {
             System.out.println("# -r<number> : set number of test repeats (default: 1)");
             System.out.println("#");
             System.out.print("# Test arguments: ");
+
+            final ArrayList<Method> testCases = new ArrayList<>();
             for (Method m : RenderPerfTest.class.getDeclaredMethods()) {
                 if (m.getName().startsWith("test") && !ignoredTests.contains(m.getName())) {
-                    System.out.print(m.getName().substring(4));
-                    System.out.print(" ");
+                    testCases.add(m);
                 }
+            }
+            testCases.sort(Comparator.comparing(Method::getName));
+            for (Method m : testCases) {
+                System.out.print(m.getName().substring(4));
+                System.out.print(" ");
             }
             System.out.println();
         }
