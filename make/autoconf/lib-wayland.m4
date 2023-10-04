@@ -149,6 +149,7 @@ AC_DEFUN_ONCE([LIB_SETUP_WAYLAND],
           fi
         fi
 
+        AC_LANG_PUSH([C++])
         if test "x$VULKAN_FOUND" = xno; then
           # Check vulkan sdk location
           AC_CHECK_HEADERS([$VULKAN_SDK/include/vulkan/vulkan.h $VULKAN_SDK/include/vulkan/vulkan_raii.hpp],
@@ -168,6 +169,7 @@ AC_DEFUN_ONCE([LIB_SETUP_WAYLAND],
             [ VULKAN_FOUND=no; break ]
           )
         fi
+        AC_LANG_POP([C++])
 
         if test "x$VULKAN_FOUND" = xno; then
           HELP_MSG_MISSING_DEPENDENCY([vulkan])
