@@ -25,8 +25,7 @@
 
 package sun.awt;
 
-import java.awt.AWTError;
-import java.awt.GraphicsDevice;
+import java.awt.*;
 import java.lang.ref.WeakReference;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -274,6 +273,32 @@ public final class X11GraphicsEnvironment extends SunGraphicsEnvironment {
                 it.remove();
             }
         }
+    }
+
+    public Point scaleUp(X11GraphicsDevice defaultDevice, int x, int y) {
+        Point p = defaultDevice.scaleUpChecked(x, y);
+        if (p != null) {
+            return p;
+        }
+        for (X11GraphicsDevice d : devices.values()) {
+            if (d != defaultDevice && (p = d.scaleUpChecked(x, y)) != null) {
+                return p;
+            }
+        }
+        return new Point(defaultDevice.scaleUpX(x), defaultDevice.scaleUpY(y));
+    }
+
+    public Point scaleDown(X11GraphicsDevice defaultDevice, int x, int y) {
+        Point p = defaultDevice.scaleDownChecked(x, y);
+        if (p != null) {
+            return p;
+        }
+        for (X11GraphicsDevice d : devices.values()) {
+            if (d != defaultDevice && (p = d.scaleDownChecked(x, y)) != null) {
+                return p;
+            }
+        }
+        return new Point(defaultDevice.scaleDownX(x), defaultDevice.scaleDownY(y));
     }
 
     @Override

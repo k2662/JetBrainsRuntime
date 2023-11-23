@@ -606,8 +606,9 @@ class XDnDDropTargetProtocol extends XDropTargetProtocol {
         y = (int)(xclient.get_data(2) & 0xFFFF);
 
         if (xwindow != null) {
-            x = xwindow.scaleDownX(x);
-            y = xwindow.scaleDownY(y);
+            Point p = xwindow.scaleDown(x, y);
+            x = p.x;
+            y = p.y;
         } else {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             for (GraphicsDevice gd : ge.getScreenDevices()) {

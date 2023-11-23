@@ -25,14 +25,7 @@
 
 package sun.awt;
 
-import java.awt.AWTPermission;
-import java.awt.DisplayMode;
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.Insets;
-import java.awt.Rectangle;
-import java.awt.Window;
+import java.awt.*;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.ArrayList;
@@ -155,6 +148,25 @@ public final class X11GraphicsDevice extends GraphicsDevice
     public int scaleDownY(int y) {
         int s = bounds.y;
         return Region.clipRound(s + (y - s) / (double)getScaleFactor());
+    }
+
+    Point scaleUpChecked(int x, int y) {
+        double ls = getScaleFactor(), lx = (x - bounds.x) * ls, ly = (y - bounds.y) * ls;
+        if (lx >= 0 && ly >= 0 && lx <= bounds.width && ly <= bounds.height) {
+            return new Point(
+                    Region.clipRound(bounds.x + lx),
+                    Region.clipRound(bounds.y + ly));
+        } else return null;
+    }
+
+    Point scaleDownChecked(int x, int y) {
+        double lx = x - bounds.x, ly = y - bounds.y;
+        if (lx >= 0 && ly >= 0 && lx <= bounds.width && ly <= bounds.height) {
+            double ls = getScaleFactor();
+            return new Point(
+                    Region.clipRound(bounds.x + lx / ls),
+                    Region.clipRound(bounds.y + ly / ls));
+        } else return null;
     }
 
     private Rectangle getBoundsImpl() {
