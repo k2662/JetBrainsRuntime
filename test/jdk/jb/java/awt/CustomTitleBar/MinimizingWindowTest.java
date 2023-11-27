@@ -23,7 +23,12 @@
 
 import com.jetbrains.JBR;
 import util.*;
-
+import test.jb.testhelpers.screenshot.ScreenShotHelpers;
+import test.jb.testhelpers.screenshot.Rect;
+import test.jb.testhelpers.TitleBar.CommonAPISuite;
+import test.jb.testhelpers.TitleBar.TaskResult;
+import test.jb.testhelpers.TitleBar.TestUtils;
+import test.jb.testhelpers.TitleBar.Task;
 import java.awt.Frame;
 import java.awt.event.InputEvent;
 import java.awt.event.WindowAdapter;

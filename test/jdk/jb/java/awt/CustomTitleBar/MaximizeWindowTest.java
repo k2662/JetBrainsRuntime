@@ -23,21 +23,18 @@
 
 import com.jetbrains.JBR;
 import com.jetbrains.WindowDecorations;
-import util.CommonAPISuite;
-import util.Task;
-import util.TaskResult;
-import util.TestUtils;
+import test.jb.testhelpers.TitleBar.CommonAPISuite;
+import test.jb.testhelpers.TitleBar.TaskResult;
+import test.jb.testhelpers.TitleBar.TestUtils;
+import test.jb.testhelpers.TitleBar.Task;
 
 import java.awt.AWTException;
 import java.awt.Dialog;
-import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Robot;
-import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.InputEvent;
 import java.lang.invoke.MethodHandles;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 

@@ -21,10 +21,10 @@
  * questions.
  */
 import com.jetbrains.JBR;
-import util.CommonAPISuite;
-import util.Task;
-import util.TaskResult;
-import util.TestUtils;
+import test.jb.testhelpers.TitleBar.CommonAPISuite;
+import test.jb.testhelpers.TitleBar.TaskResult;
+import test.jb.testhelpers.TitleBar.TestUtils;
+import test.jb.testhelpers.TitleBar.Task;
 
 import java.awt.Robot;
 import java.lang.invoke.MethodHandles;

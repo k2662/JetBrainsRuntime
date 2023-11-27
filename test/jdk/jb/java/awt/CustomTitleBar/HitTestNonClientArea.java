@@ -23,7 +23,11 @@
 
 import com.jetbrains.JBR;
 import util.*;
-
+import test.jb.testhelpers.TitleBar.CommonAPISuite;
+import test.jb.testhelpers.TitleBar.TaskResult;
+import test.jb.testhelpers.TitleBar.TestUtils;
+import test.jb.testhelpers.TitleBar.Task;
+import test.jb.testhelpers.utils.MouseUtils;
 import javax.swing.*;
 import java.awt.AWTException;
 import java.awt.Button;

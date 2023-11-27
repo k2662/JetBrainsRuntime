@@ -21,7 +21,13 @@
  * questions.
  */
 import com.jetbrains.JBR;
-import util.*;
+
+import test.jb.testhelpers.screenshot.ScreenShotHelpers;
+import test.jb.testhelpers.screenshot.Rect;
+import test.jb.testhelpers.TitleBar.CommonAPISuite;
+import test.jb.testhelpers.TitleBar.TaskResult;
+import test.jb.testhelpers.TitleBar.TestUtils;
+import test.jb.testhelpers.TitleBar.Task;
 
 import java.awt.Robot;
 import java.awt.image.BufferedImage;
@@ -89,7 +95,7 @@ public class HiddenNativeControlsTest {
             System.out.println("Found controls at the title bar:");
             foundControls.forEach(System.out::println);
 
-            if (foundControls.size() != 0) {
+            if (!foundControls.isEmpty()) {
                 err("controls are disabled, but found in the screenshot");
             }
 

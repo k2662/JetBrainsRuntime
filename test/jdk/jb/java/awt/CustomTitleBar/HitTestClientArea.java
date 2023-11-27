@@ -22,10 +22,15 @@
  */
 
 import com.jetbrains.JBR;
-import util.*;
 
-import javax.swing.JDialog;
-import javax.swing.JFrame;
+import test.jb.testhelpers.TitleBar.TaskResult;
+import test.jb.testhelpers.TitleBar.TestUtils;
+import test.jb.testhelpers.TitleBar.Task;
+import test.jb.testhelpers.TitleBar.CommonAPISuite;
+import test.jb.testhelpers.utils.MouseUtils;
+import util.AWTTask;
+import util.SwingTask;
+
 import javax.swing.JPanel;
 import java.awt.*;
 import java.awt.event.InputEvent;

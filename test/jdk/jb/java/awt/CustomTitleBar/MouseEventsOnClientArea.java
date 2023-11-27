@@ -23,7 +23,10 @@
 import com.jetbrains.JBR;
 import com.jetbrains.WindowDecorations;
 import util.*;
-
+import test.jb.testhelpers.TitleBar.CommonAPISuite;
+import test.jb.testhelpers.TitleBar.TaskResult;
+import test.jb.testhelpers.TitleBar.TestUtils;
+import test.jb.testhelpers.TitleBar.Task;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.InputEvent;
