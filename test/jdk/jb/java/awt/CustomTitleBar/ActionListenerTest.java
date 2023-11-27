@@ -38,7 +38,8 @@ import java.util.List;
  * @test
  * @summary Verify mouse events in custom title bar's area added by ActionListener
  * @requires (os.family == "windows" | os.family == "mac")
- * @library ../../../testhelpers/screenshot ../../../testhelpers/TitleBar
+ * @library ../../../testhelpers/screenshot ../../../testhelpers/TitleBar ../../../testhelpers/utils
+ * @build TestUtils TaskResult Task CommonAPISuite MouseUtils ScreenShotHelpers Rect RectCoordinates MouseUtils
  * @run main/othervm ActionListenerTest
  * @run main/othervm -Dsun.java2d.uiScale.enabled=true -Dsun.java2d.uiScale=1.0 ActionListenerTest
  * @run main/othervm -Dsun.java2d.uiScale.enabled=true -Dsun.java2d.uiScale=1.25 ActionListenerTest

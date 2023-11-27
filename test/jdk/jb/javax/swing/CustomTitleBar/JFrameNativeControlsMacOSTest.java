@@ -35,7 +35,7 @@ import java.awt.Robot;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.util.List;
-JBR-
+
 /*
  * @test
  * @summary Detect and check behavior of clicking to native controls
