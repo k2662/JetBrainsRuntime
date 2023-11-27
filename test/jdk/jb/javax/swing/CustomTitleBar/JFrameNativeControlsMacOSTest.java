@@ -35,7 +35,7 @@ import java.awt.Robot;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.util.List;
-
+JBR-
 /*
  * @test
  * @summary Detect and check behavior of clicking to native controls
@@ -64,8 +64,10 @@ public class JFrameNativeControlsMacOSTest {
 
     private static boolean closingActionCalled = false;
     private static boolean iconifyingActionCalled = false;
-    private static boolean maximizingActionDetected = false;
+    private static volatile boolean maximizingActionDetected = false;
     private static boolean deiconifyindActionDetected = false;
+    private static boolean passed = true;
+    private static String error = "";
 
     private static Robot robot;
 
@@ -102,12 +104,41 @@ public class JFrameNativeControlsMacOSTest {
                 robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
                 robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
                 robot.waitForIdle();
+                if (maximizingActionDetected) {
+                    robot.keyPress(KeyEvent.VK_META);
+                    robot.keyPress(KeyEvent.VK_CONTROL);
+                    robot.keyPress(KeyEvent.VK_F);
+                    robot.keyRelease(KeyEvent.VK_META);
+                    robot.keyRelease(KeyEvent.VK_CONTROL);
+                    robot.keyRelease(KeyEvent.VK_F);
+                    robot.delay(500);
+                }
                 jFrame.setBounds(screenX, screenY, w, h);
                 jFrame.setVisible(true);
                 robot.waitForIdle();
             });
         } finally {
             SwingUtilities.invokeAndWait(JFrameNativeControlsMacOSTest::disposeUI);
+        }
+
+        if (!maximizingActionDetected) {
+            err("maximizing action was not detected");
+        }
+
+        if (!closingActionCalled) {
+            err("closing action was not detected");
+        }
+
+        if (!iconifyingActionCalled) {
+            err("iconifying action was not detected");
+        }
+        if (!deiconifyindActionDetected) {
+            err("deiconifying action was not detected");
+        }
+        if (!passed) {
+            System.out.println("TEST FAILED");
+        } else {
+            System.out.println("TEST PASSED");
         }
     }
 
@@ -120,6 +151,8 @@ public class JFrameNativeControlsMacOSTest {
         addWindowStateListener();
         addMacOsFullScreenListener();
         jFrame.setVisible(true);
+        jFrame.setAlwaysOnTop(true);
+        jFrame.requestFocus();
     }
 
     private static void disposeUI() {
@@ -171,30 +204,29 @@ public class JFrameNativeControlsMacOSTest {
             @Override
             public void windowEnteringFullScreen(FullScreenEvent fse) {
                 maximizingActionDetected = true;
-
-//                robot.keyPress(KeyEvent.VK_META);
-//                robot.keyPress(KeyEvent.VK_CONTROL);
-//                robot.keyPress(KeyEvent.VK_F);
-//
-//                robot.keyRelease(KeyEvent.VK_META);
-//                robot.keyRelease(KeyEvent.VK_CONTROL);
-//                robot.keyRelease(KeyEvent.VK_F);
             }
 
             @Override
-            public void windowEnteredFullScreen(com.apple.eawt.event.FullScreenEvent fse) {
+            public void windowEnteredFullScreen(FullScreenEvent fse) {
             }
 
             @Override
-            public void windowExitingFullScreen(com.apple.eawt.event.FullScreenEvent fse) {
-
+            public void windowExitingFullScreen(FullScreenEvent fse) {
+                System.out.println("Exiting fullscreen");
             }
 
             @Override
-            public void windowExitedFullScreen(com.apple.eawt.event.FullScreenEvent fse) {
+            public void windowExitedFullScreen(FullScreenEvent fse) {
+                System.out.println("Exited fullscreen");
             }
         };
         FullScreenUtilities.addFullScreenListenerTo(jFrame, fullScreenListener);
+    }
+
+    private static void err(String message) {
+        error = error + message + "\n";
+        passed = false;
+        System.out.println(message);
     }
 
 }
