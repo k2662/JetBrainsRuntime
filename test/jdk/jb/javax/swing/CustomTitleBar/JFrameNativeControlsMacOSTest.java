@@ -45,6 +45,14 @@ import java.util.List;
  * @modules java.desktop/com.apple.eawt
  *          java.desktop/com.apple.eawt.event
  * @run main/othervm JFrameNativeControlsMacOSTest
+ * @run main/othervm -Dsun.java2d.uiScale.enabled=true -Dsun.java2d.uiScale=1.0 JFrameNativeControlsMacOSTest
+ * @run main/othervm -Dsun.java2d.uiScale.enabled=true -Dsun.java2d.uiScale=1.25 JFrameNativeControlsMacOSTest
+ * @run main/othervm -Dsun.java2d.uiScale.enabled=true -Dsun.java2d.uiScale=1.5 JFrameNativeControlsMacOSTest
+ * @run main/othervm -Dsun.java2d.uiScale.enabled=true -Dsun.java2d.uiScale=2.0 JFrameNativeControlsMacOSTest
+ * @run main/othervm -Dsun.java2d.uiScale.enabled=true -Dsun.java2d.uiScale=2.5 JFrameNativeControlsMacOSTest
+ * @run main/othervm -Dsun.java2d.uiScale.enabled=true -Dsun.java2d.uiScale=3.0 JFrameNativeControlsMacOSTest
+ * @run main/othervm -Dsun.java2d.uiScale.enabled=true -Dsun.java2d.uiScale=3.5 JFrameNativeControlsMacOSTest
+ * @run main/othervm -Dsun.java2d.uiScale.enabled=true -Dsun.java2d.uiScale=4.0 JFrameNativeControlsMacOSTest
  */
 public class JFrameNativeControlsMacOSTest {
 
