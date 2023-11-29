@@ -670,7 +670,7 @@ class XWindowPeer extends XPanelPeer implements WindowPeer,
         int curScreenNum = ((X11GraphicsDevice)getGraphicsConfiguration().getDevice()).getScreen();
         int newScreenNum = curScreenNum;
         GraphicsDevice[] gds = XToolkit.localEnv.getScreenDevices();
-        GraphicsConfiguration newGC = null;
+        GraphicsConfiguration newGC = getGraphicsConfiguration();
 
         for (int i = 0; i < gds.length; i++) {
             X11GraphicsDevice device = (X11GraphicsDevice) gds[i];
@@ -690,22 +690,6 @@ class XWindowPeer extends XPanelPeer implements WindowPeer,
                 }
             }
         }
-        // Ensure that after window will be moved to another monitor and (probably)
-        // resized as a result, majority of its area will stay on the new monitor
-        if (newScreenNum != curScreenNum) {
-            X11GraphicsDevice device = (X11GraphicsDevice) gds[newScreenNum];
-            Rectangle screenBounds = newGC.getBounds();
-            // Rescale screen size to native unscaled coordinates
-            screenBounds.width = device.scaleUp(screenBounds.width);
-            screenBounds.height = device.scaleUp(screenBounds.height);
-            Rectangle intersection = screenBounds.intersection(newBounds);
-            if (intersection.isEmpty() ||
-                    intersection.width * intersection.height <= newBounds.width * newBounds.height / 2) {
-                newScreenNum = curScreenNum; // Don't move to new screen
-            }
-        }
-
-        if (newScreenNum == curScreenNum) newGC = getGraphicsConfiguration();
 
         Dimension newSize = scaleDimensionToGC(newBounds.getSize(), newGC);
         if (newScreenNum != curScreenNum) {
